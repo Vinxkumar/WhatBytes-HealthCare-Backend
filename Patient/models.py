@@ -1,9 +1,6 @@
 from django.db import models
 from django.conf import settings
 
-
-
-
 # Create your models here.
 class Patient(models.Model):
     
@@ -23,7 +20,7 @@ class Patient(models.Model):
         choices=GENDER_CHOICES
     )
     address = models.TextField(max_length=255)
-    phone = models.CharField(max_length=13)
+    phone = models.CharField(max_length=13, unique=True)
     
     # medical_history
     created_by = models.ForeignKey(
