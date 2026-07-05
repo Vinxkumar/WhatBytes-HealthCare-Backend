@@ -1,8 +1,12 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
 from rest_framework import status
 
+from rest_framework_simplejwt.tokens import AccessToken
+
 from django.contrib.auth import authenticate
+
 
 from .serializers import (
     SignupSerializer,
@@ -10,6 +14,8 @@ from .serializers import (
 )
 
 class SignUpView(APIView):
+    
+    permission_classes = [AllowAny]
     
     def post(self, request):
         serializer = SignupSerializer(data = request.data)
@@ -29,6 +35,8 @@ class SignUpView(APIView):
         )
 
 class LoginView(APIView):
+    
+    permission_classes = [AllowAny]
     
     def post(self, request):
         serializer = LoginSerializer(
@@ -57,9 +65,12 @@ class LoginView(APIView):
                 },
                 status=status.HTTP_401_UNAUTHORIZED
             )
+        token = AccessToken.for_user(user)
+        
         return Response(
             {
                 "message":"Login Successfull",
+                "token": str(token),
                 "user": {
                     "name": user.name,
                     "email": user.email
@@ -67,4 +78,3 @@ class LoginView(APIView):
             },
             status=status.HTTP_200_OK
         )
-# Create your views here.
