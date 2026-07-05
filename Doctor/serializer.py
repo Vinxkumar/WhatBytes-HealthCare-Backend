@@ -7,6 +7,7 @@ class DoctorSerializer(serializers.ModelSerializer):
         model = Doctor
         
         fields = [
+            "id",
             "name",
             "email",
             "phone",
