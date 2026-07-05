@@ -86,7 +86,7 @@ class MappingDeleteView(APIView):
     def delete(self, request, id):
         mapping = get_object_or_404(
             Appointment,
-            id=id
+            doctor_id=id
         )
 
         mapping.delete()
