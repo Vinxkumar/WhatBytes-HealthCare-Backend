@@ -14,12 +14,12 @@ class DoctorListCreateView(APIView):
 
     def get(self, request):
 
-        patients = Doctor.objects.filter(
+        doctor = Doctor.objects.filter(
             created_by=request.user
         )
 
         serializer = DoctorSerializer(
-            patients,
+            doctor,
             many=True
         )
 
@@ -37,12 +37,12 @@ class DoctorListCreateView(APIView):
 
         if serializer.is_valid():
 
-            patient = serializer.save(
+            doctor = serializer.save(
                 created_by=request.user
             )
 
             return Response(
-                DoctorSerializer(patient).data,
+                DoctorSerializer(doctor).data,
                 status=status.HTTP_201_CREATED
             )
 
@@ -57,14 +57,14 @@ class DoctorDetailView(APIView):
 
     def get(self, request, id):
 
-        patient = get_object_or_404(
+        doctor = get_object_or_404(
             Doctor,
             id=id,
             created_by=request.user
         )
 
         serializer = DoctorSerializer(
-            patient
+            doctor
         )
 
         return Response(
@@ -75,14 +75,14 @@ class DoctorDetailView(APIView):
 
     def put(self, request, id):
 
-        patient = get_object_or_404(
+        doctor = get_object_or_404(
             Doctor,
             id=id,
             created_by=request.user
         )
 
         serializer = DoctorSerializer(
-            patient,
+            doctor,
             data=request.data
         )
 
@@ -103,13 +103,13 @@ class DoctorDetailView(APIView):
 
     def delete(self, request, id):
 
-        patient = get_object_or_404(
+        doctor = get_object_or_404(
             Doctor,
             id=id,
             created_by=request.user
         )
 
-        patient.delete()
+        doctor.delete()
 
         return Response(
             status=status.HTTP_204_NO_CONTENT
