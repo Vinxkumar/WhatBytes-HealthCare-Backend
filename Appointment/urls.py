@@ -3,6 +3,7 @@ from django.urls import path
 from .views import (
     MappingListCreateView,
     PatientMappingView,
+    MappingDeleteView
 )
 
 
@@ -17,5 +18,10 @@ urlpatterns = [
         "<int:id>/",
         PatientMappingView.as_view(),
         name="mapping-detail"
+    ),
+    path(
+        "doc/<int:id>/",
+        MappingDeleteView.as_view(),
+        name="delete-mapping-detail"
     ),
 ]
